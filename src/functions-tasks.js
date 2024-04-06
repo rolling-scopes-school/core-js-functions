@@ -18,7 +18,7 @@
  *
  */
 function getCurrentFunctionName() {
-  throw new Error('Not implemented');
+  return 'getCurrentFunctionName';
 }
 
 /**
@@ -32,8 +32,11 @@ function getCurrentFunctionName() {
  *   getFunctionBody(hiHello) => "function hiHello() { console.log('hello world'); }"
  *
  */
-function getFunctionBody(/* func */) {
-  throw new Error('Not implemented');
+function getFunctionBody(func) {
+  const funcToString = func.toString();
+  const start = funcToString.indexOf('{') + 1;
+  const end = funcToString.lastIndexOf('}');
+  return funcToString.slice(start, end).trim();
 }
 
 /**
@@ -50,8 +53,8 @@ function getFunctionBody(/* func */) {
  *  ]) => [0, 1, 2]
  *
  */
-function getArgumentsCount(/* funcs */) {
-  throw new Error('Not implemented');
+function getArgumentsCount(funcs) {
+  return funcs.map((func) => func.length);
 }
 
 /**
@@ -70,8 +73,10 @@ function getArgumentsCount(/* funcs */) {
  *   power05(16) => 4
  *
  */
-function getPowerFunction(/* exponent */) {
-  throw new Error('Not implemented');
+function getPowerFunction(exponent) {
+  return function rti(rty) {
+    return rty ** exponent;
+  };
 }
 
 /**
@@ -87,8 +92,16 @@ function getPowerFunction(/* exponent */) {
  *   getPolynom(8)     => y = 8
  *   getPolynom()      => null
  */
-function getPolynom() {
-  throw new Error('Not implemented');
+function getPolynom(...coefficients) {
+  if (coefficients.length === 0) return null;
+
+  return function readf(read) {
+    let result = 0;
+    for (let i = 0; i < coefficients.length; i + 1) {
+      result += coefficients[i] * (read ** coefficients.length - 1 - i);
+    }
+    return result;
+  };
 }
 
 /**
@@ -105,8 +118,15 @@ function getPolynom() {
  *   ...
  *   memoizer() => the same random number  (next run, returns the previous cached result)
  */
-function memoize(/* func */) {
-  throw new Error('Not implemented');
+function memoize(func) {
+  const cache = {};
+  return function mim(...args) {
+    const key = JSON.stringify(args);
+    if (!(key in cache)) {
+      cache[key] = func.apply(this, args);
+    }
+    return cache[key];
+  };
 }
 
 /**
@@ -151,8 +171,14 @@ function retry(/* func, attempts */) {
  * cos(3.141592653589793) ends
  *
  */
-function logger(/* func, logFunc */) {
-  throw new Error('Not implemented');
+function logger(func, logFunc) {
+  return function log(...args) {
+    const argsString = args.map((arg) => JSON.stringify(arg)).join(', ');
+    logFunc(`${func.name}(${argsString}) starts`);
+    const result = func.apply(this, args);
+    logFunc(`${func.name}(${argsString}) ends`);
+    return result;
+  };
 }
 
 /**
