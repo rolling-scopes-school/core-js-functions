@@ -35,8 +35,8 @@ function getCurrentFunctionName() {
 function getFunctionBody(func) {
   const funcToString = func.toString();
   const start = funcToString.indexOf('{') + 1;
-  const end = funcToString.lastIndexOf('}');
-  return funcToString.slice(start, end).trim();
+  const endt = funcToString.lastIndexOf('}');
+  return funcToString.slice(start, endt).trim();
 }
 
 /**
